@@ -1,0 +1,81 @@
+#include <iostream>
+#include <vector>
+#include <string> 
+
+//Defining 
+class bankAccount {
+private:
+	std::string accountNumber;
+	std::string accountHolderName;
+	double balance;
+
+public: //Default constructor
+	bankAccount() {
+		accountNumber = "000";
+		accountHolderName = "New Account";
+		balance = 0.0;
+	}
+
+	//Parameterized constructor
+	bankAccount(std::string accNum, std::string name, double bal) {
+		accountNumber = accNum;
+		accountHolderName = name;
+		balance = bal;
+	}
+
+	//Accessors or getters
+	std::string getAccountHolderName() const {
+		return accountHolderName;
+	}
+	double getBalance() const {
+		return balance;
+	}
+
+	//Mutator or setters
+	void setAccountHolderName(std::string name) {
+		accountHolderName = name;
+	}
+	
+	void deposit(double amount) {
+		if (amount > 0) balance += amount;
+	}
+
+	void withdraw(double amount) {
+		if (amount > 0 && amount <= balance) {
+			balance -= amount;
+		}
+		else {
+			std::cout << "NO funds or invalid amount." << std::endl;
+		}
+	}
+
+};
+
+//Actions
+int main() {
+	std::vector<bankAccount> myAccounts;
+	int choice = 0;
+	
+		while (choice != 3) {
+			std::cout << "\n1. Add Account\n2. View All Accounts\n3. Exit\nSelection: ";
+			std::cin >> choice;
+
+			if (choice == 1) {
+				std::string num, name;
+				double bal;
+
+				std::cout << "Account Number: "; std::cin >> num;
+				std::cout << "Name: "; std::cin >> name;
+				std::cout << "Initial Balance: "; std::cin >> bal;
+				myAccounts.push_back(bankAccount(num, name, bal));
+			}
+			else if (choice == 2) {
+				for (size_t i = 0; i < myAccounts.size(); ++i) {
+					std::cout << "Owner: " << myAccounts.at(i).getAccountHolderName()
+						<< " | Balance: $" << myAccounts.at(i).getBalance() << std::endl;
+				}
+			}
+		}
+
+	return 0;
+}
